@@ -14,17 +14,27 @@ class ProspectTest extends TestCase{
         $prospect = new Prospect();
         $this->assertEquals(
             TRUE,
-            $prospect->incluirProspect("Azul", "12345678900", "azul@eumacor.com", "49940028922", "1234-1234", "10100100", "Uma Rua Ai", "00", "Um Bairro", "Cidade", "CD", "azul é uma cor")
+            $prospect->incluirProspect('Azul', '12345678900', 'azul@eumacor.com', '49940028922', '1234-1234', '10100100', 
+                                        'Uma Rua Ai', '00', 'Um Bairro', 'Cidade', 'CD', 'azul é uma cor')
         );
         unset($prospect);
     }
-    
+    /** @test */
+    public function testatualizarProspect(){
+        $prospect = new Prospect();
+        $this->assertEquals(
+            TRUE,
+            $prospect->atualizarProspect('Branco', '12345678900', 'branco@eumacor.com', '49940028922', '1234-1234', '10100100', 
+                                        'Uma Rua Ai', '00', 'Um Bairro', 'Cidade', 'CD', 'branco é uma cor', '25')
+        );
+        unset($prospect);
+    }
     /** @test */
     public function testdeletarProspect(){
        $prospect = new Prospect();
        $this->assertEquals(
            TRUE,
-           $prospect->deletarProspect("12345678900")
+           $prospect->deletarProspect('25')
        );
        unset($prospect);
     }

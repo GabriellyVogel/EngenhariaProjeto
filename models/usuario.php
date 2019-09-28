@@ -10,7 +10,7 @@ class Usuario{
 
     public function logar($login, $senha){
         $conexaoDB = $this->conectarBanco();
-        $sql = $conexaoDB->prepara("select nomecompleto, email, login from usuario
+        $sql = $conexaoDB->prepare("select nomecompleto, email, login from usuario
                                     where
                                     login = ?
                                     and
@@ -18,7 +18,7 @@ class Usuario{
         $sql->bind_param("ss", $login, $senha);
         //String String -> ss
         //Int Int -> ii
-        $sql>execute();
+        $sql->execute();
 
         $resultado = $sql->get_result(); //Filtra o resultado em uma linha
         if($resultado->num_rows === 0){ //Número de linhas = 0 -> Login Incorreto
@@ -39,18 +39,23 @@ class Usuario{
         $conexaoDB->close();
         return $this->estaLogado;
     }
-    public function incluirUsuario($nomecompleto, $email, $loin, $senha){
+    public function incluirUsuario($nomecompleto, $email, $login, $senha){
         $conexaoDB = $this->conectarBanco();
 
         $sqlInsert = $conexaoDB->prepare("insert into usuario
-                                        (nomecompleto, email, login, senha
+                                        (nomecompleto, email, login, senha)
                                         values
                                         (?, ?, ?, ?)");
 
-        $sqlInsert->bind_param("ssss", $nomecompleto, $email, $loin, $senha);
+        $sqlInsert->bind_param("ssss", $nomecompleto, $email, $login, $senha);
 
         $sqlInsert->execute();
 
+        if(!$sqlInsert->error){
+            return true;
+        }else{
+            return false;
+        }
         return TRUE;
     }
     private function conectarBanco(){
